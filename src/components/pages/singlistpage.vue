@@ -64,8 +64,8 @@ export default {
     },
     sendplaysingmassage(item)
     {
-      localStorage.setItem('playsing',JSON.stringify(item));
-      this.$store.dispatch('songsid', item);
+      localStorage.setItem('sendplaysing',JSON.stringify(item));
+      this.$bus.$emit('playsing',item);
     }
   },
   created() {

@@ -8,7 +8,9 @@
 <!--      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16"><path fill="currentColor" d="m1 7.4l.7.7l6-6l6 6l.7-.7L8.1 1h-.7L1 7.4zm0 6l.7.7l6-6l6 6l.7-.7L8.1 7h-.7L1 13.4z"/></svg>-->
     </div>
     <div class="w-5/6 h-full bg-red-300 flex justify-center items-center">
-        <div class="w-1/2 h-full bg-blue-200"></div>
+        <div class="w-1/2 h-full bg-blue-200">
+          <img class="h-full" :src="songsinformation.data.songs[0].al.picUrl">
+        </div>
     </div>
   </div>
 
@@ -52,24 +54,37 @@
 <script>
 import axios from "axios";
 import httpurls from "@/httpurl";
+import {data} from "autoprefixer";
 export default {
   name: "playsings",
   data() {
     return {
       songsid:null,
-      songmassgae: JSON.parse(localStorage.getItem('playsing'))
+      songmassgae:'',
+      songsurl:'',
+      songsinformation:'',
     };
   },
-  mounted() {
-    console.log(this.songmassgae,'mount中的值')
+  created() {
+
   },
-  watch: {
-    songmassgae: {
-      handler: function (val, oldVal) {
-        console.log(val,oldVal);
-      },
-      deep: true
-    }
+  mounted() {
+    this.$bus.$on('playsing', (data) => {
+      console.log(data)
+      localStorage.setItem('getplaysing', JSON.stringify(data))
+      this.songmassgae = JSON.parse(localStorage.getItem('getplaysing'));
+      console.log(this.songmassgae.id)
+      axios.get(`${httpurls}/song/url?id=${this.songmassgae.id}`).then(res => {
+        console.log(res)
+        this.songsurl = res.data.data[0].url
+        console.log(this.songsurl,'url')
+      })
+      axios.get(`${httpurls}/song/detail?ids=${this.songmassgae.id}`).then(res => {
+        localStorage.setItem('getplaysinginformation', JSON.stringify(res))
+        this.songsinformation = JSON.parse(localStorage.getItem('getplaysinginformation'));
+        console.log(this.songsinformation,'information')
+      })
+    });
   },
 }
 </script>
