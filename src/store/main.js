@@ -17,39 +17,39 @@ const actions = {
         const res = await axios.post(`${httpbefore}/login/qr/create?key=${countx.state.newkey}&qrimg=true`);
         countx.commit('setNewqrimg', res.data.data.qrimg);
     },
-    async getqrstate(countx, value) {
-        getuserqr = setInterval(async () => {
-            const res = await axios.post(`${httpbefore}/login/qr/check?key=${countx.state.newkey}&timerstamp=${Date.now()}`);
-            console.log(res, '全部信息');
-            countx.commit('setqrState', res);
-            if (res.data.code === 803) {
-                window.localStorage.setItem('cookie', res.data.cookie)
-                console.log(res)
-                clearInterval(getuserqr);
-            }
-        }, 1000);
-    },
+    // async getqrstate(countx, value) {
+    //     getuserqr = setInterval(async () => {
+    //         const res = await axios.post(`${httpbefore}/login/qr/check?key=${countx.state.newkey}&timerstamp=${Date.now()}`);
+    //         console.log(res, '全部信息');
+    //         countx.commit('setqrState', res);
+    //         if (res.data.code === 803) {
+    //             window.localStorage.setItem('cookie', res.data.cookie)
+    //             console.log(res)
+    //             clearInterval(getuserqr);
+    //         }
+    //     }, 1000);
+    // },
     //获取用户登陆状态
-    async getuserlogin(countx, value) {
-        console.log(window.localStorage.getItem('cookie'), '用户登陆cook')
-        usercookie = window.localStorage.getItem('cookie')
-        const res = await axios({
-            url: `${httpbefore}/login/status?timerstamp=${Date.now()}`,
-            method: 'post',
-            data: {
-                cookie: usercookie,
-            },
-        })
-        console.log(usercookie, '用户登陆cook')
-        console.log(res, '用户登陆状态');
-        countx.commit('setuserlogin', res);
-    },
+    // async getuserlogin(countx, value) {
+    //     console.log(window.localStorage.getItem('cookie'), '用户登陆cook')
+    //     usercookie = window.localStorage.getItem('cookie')
+    //     const res = await axios({
+    //         url: `${httpbefore}/login/status?timerstamp=${Date.now()}`,
+    //         method: 'post',
+    //         data: {
+    //             cookie: usercookie,
+    //         },
+    //     })
+    //     console.log(usercookie, '用户登陆cook')
+    //     console.log(res, '用户登陆状态');
+    //     countx.commit('setuserlogin', res);
+    // },
     //获取用户信息
-    async getuserdetail(countx, value) {
-        const res = await axios.get(`${httpbefore}/user/detail?${usercookie}`);
-        countx.commit('setuserdetail', res);
-        console.log(res, '用户信息');
-    },
+    // async getuserdetail(countx, value) {
+    //     const res = await axios.get(`${httpbefore}/user/detail?${usercookie}`);
+    //     countx.commit('setuserdetail', res);
+    //     console.log(res, '用户信息');
+    // },
 
     async getlovemassage(countx, value) {
         try {
@@ -59,39 +59,10 @@ const actions = {
             console.log(err);
         }
     },
-    async getnetizens(countx, value) {
-        const res = await axios.get(`${httpbefore}/top/playlist?${usercookie}&limit=6`);
-        countx.commit('setsingbynetizens', res);
-    },
     async gettodayshici(countx, value) {
         try {
             const res = await axios.get('https://v1.jinrishici.com/all.json');
             countx.commit('settodayshici', res.data);
-        } catch (err) {
-            console.log(err);
-        }
-    },
-    async getallbumnew(countx, value) {
-        try {
-            const res = await axios.get(`${httpbefore}/album/new?${usercookie}&area=ALL&limit=6`);
-            countx.commit('setallbumnew', res);
-        } catch (err) {
-            console.log(err);
-        }
-    },
-
-    async gethotartists(countx, value) {
-        try {
-            const res = await axios.get(`${httpbefore}/top/artists?${usercookie}&limit=30`);
-            countx.commit('sethotartists', res);
-        } catch (err) {
-            console.log(err);
-        }
-    },
-    async getpersonalized(countx, value) {
-        try {
-            const res = await axios.get(`${httpbefore}/personalized?${usercookie}&limit=8`);
-            countx.commit('setpersonalized', res);
         } catch (err) {
             console.log(err);
         }
