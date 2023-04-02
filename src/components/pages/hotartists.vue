@@ -15,9 +15,9 @@
     </div>
 
 
-    <div class="relative bg-gray-900">
+    <div class="relative" id="singbg">
       <div class="relative h-80 overflow-hidden bg-indigo-600 md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2">
-        <img :src="topsong1img" class="h-full w-full object-cover" alt="">
+        <img ref="singbg" :src="topsong1img" class="h-full w-full object-cover" alt="">
         <svg viewBox="0 0 926 676" aria-hidden="true" class="absolute -bottom-24 left-24 w-[57.875rem] transform-gpu blur-[118px]">
           <path fill="url(#60c3c621-93e0-4a09-a0e6-4c228a0116d8)" fill-opacity=".4" d="m254.325 516.708-90.89 158.331L0 436.427l254.325 80.281 163.691-285.15c1.048 131.759 36.144 345.144 168.149 144.613C751.171 125.508 707.17-93.823 826.603 41.15c95.546 107.978 104.766 294.048 97.432 373.585L685.481 297.694l16.974 360.474-448.13-141.46Z" />
           <defs>
@@ -98,6 +98,7 @@ export default {
     }
   },
   created() {
+    //每当跳转路由就回到顶部
     this.singerid = JSON.parse(localStorage.getItem('singerid'));
     console.log(this.singerid);
     const hotartistsmsg = async () => {
@@ -135,6 +136,7 @@ export default {
   },
   mounted() {
     // 提取图片主色调
+    let getrgb=()=>{
     const img = this.$refs.myImage;
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
@@ -159,6 +161,38 @@ export default {
       const avgB = b / pixelCount;
       document.getElementById('bg').style.background = `rgb(${avgR},${avgG},${avgB})`;
     };
+    }
+
+
+    let getrgbsing=()=>{
+      const img = this.$refs.singbg;
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      img.crossOrigin = "anonymous";
+      img.onload = function() {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const pixels = imageData.data;
+        const pixelCount = canvas.width * canvas.height;
+        let r = 0;
+        let g = 0;
+        let b = 0;
+        for (let i = 0; i < pixelCount; i++) {
+          r += pixels[i * 4];
+          g += pixels[i * 4 + 1];
+          b += pixels[i * 4 + 2];
+        }
+        const avgR = r / pixelCount;
+        const avgG = g / pixelCount;
+        const avgB = b / pixelCount;
+        document.getElementById('singbg').style.background = `rgb(${avgR},${avgG},${avgB})`;
+      };
+    }
+
+    getrgb();
+    getrgbsing();
   }
 }
 
