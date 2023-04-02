@@ -1,13 +1,8 @@
 import VueRouter from "vue-router";
 import principalpage from "@/components/pages/principalpage.vue";
 import homepage from "@/components/homepage.vue";
-import singlistpage from "@/components/pages/singlistpage.vue";
-import newsingall from "@/components/pages/newsingall.vue";
 import login from "@/components/login.vue";
-import userhome from "@/components/pages/userhome.vue";
-import artistdetails from "@/components/pages/artistdetails.vue";
-import allbumnew from "@/components/pages/hotartists.vue";
-import hotartists from "@/components/pages/hotartists.vue";
+
 
 let getcooike;
 const routes = [
@@ -33,35 +28,38 @@ const routes = [
             {
                 path: '/homepage/singlistpage',
                 name: 'singlistpage',
-                component: singlistpage
+                component: () => import('@/components/pages/singlistpage.vue')
             },
             {
                 path: '/homepage/newsingall',
                 name: 'newsingall',
-                component: newsingall
+                component: () => import('@/components/pages/newsingall.vue')
             },
             {
                 path:'/homepage/userhome',
                 name:'userhome',
-                component: userhome
+                component: ()=>import('@/components/pages/userhome.vue')
             },
             {
                 path: '/homepage/artistdetails',
                 name: 'artistdetails',
-                component:artistdetails
+                component:()=>import('@/components/pages/artistdetails.vue')
             },
             {
                 path: '/homepage/hotartists',
                 name: 'hotartists',
-                component: hotartists
+                component: () => import('@/components/pages/hotartists.vue')
             }
         ]
     }
 ]
 
 const router = new VueRouter({
-    routes
+    routes,
+
 });
+
+
 
 
 export default router

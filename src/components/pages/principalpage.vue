@@ -161,6 +161,7 @@ export default {
     {
       this.$router.push({path: '/homepage/hotartists', query: {id}});
       localStorage.setItem('singerid', JSON.stringify(id));
+      localStorage.setItem('is_reloaded', JSON.stringify(0));
     }
   },
   mounted() {

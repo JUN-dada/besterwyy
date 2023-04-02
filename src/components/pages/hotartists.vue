@@ -1,5 +1,6 @@
 <template>
-  <div class="w-full h-screen">
+  <div class="w-full h-auto">
+
 
     <div id="bg" ref="background" class="py-24 sm:py-32">
       <div class="relative isolate">
@@ -33,15 +34,15 @@
           <h2 class="text-base font-semibold leading-7 text-indigo-400"></h2>
           <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">{{ topsong1.name }}</p>
           <p class="mt-6 text-base leading-7 text-gray-300">{{topsongsname}}</p>
-          <div class="mt-8">
-            <a href="#" class="inline-flex rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">播放</a>
+          <div @click="sendsinsid(topsong1.id)" class="mt-8">
+            <span  class="inline-flex rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">播放</span>
           </div>
         </div>
       </div>
     </div>
 
     <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <li class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow" v-for="item in topsong" :key="topsong.id">
+      <li class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow" v-for="item in topsong.slice(0,num)" :key="topsong.id">
         <div class="flex w-full items-center justify-between space-x-6 p-6">
           <div class="flex-1 truncate">
             <div class="flex items-center space-x-3">
@@ -51,25 +52,90 @@
               <span v-for="item2 in item.ar">{{item2.name}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </p>
           </div>
-          <img class="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+          <img class="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" :src="item.al.picUrl" alt="">
         </div>
         <div>
           <div class="-mt-px flex divide-x divide-gray-200">
             <div class="flex w-0 flex-1">
-              <a class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
-                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" />
-                  <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
-                </svg>
+              <span class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m10 7l6 5l-6 5V7z"/></svg>
                 播放
-              </a>
+              </span>
             </div>
           </div>
         </div>
       </li>
-
-      <!-- More people... -->
     </ul>
+
+    <div class="relative">
+      <div class="absolute inset-0 flex items-center" aria-hidden="true">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center">
+    <span style="cursor: pointer" @click="clicknum" class="bg-white px-2 text-gray-500">
+     加载更多
+    </span>
+      </div>
+    </div>
+
+
+    <div class="bg-white py-24 md:py-32 lg:py-40 relative">
+      <div class="mx-auto grid max-w-7xl grid-cols-1 gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
+        <div class="mx-auto max-w-2xl lg:mx-0">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">歌手专辑</h2>
+        </div>
+        <ul role="list" class="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-20 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-8 xl:col-span-2">
+          <li v-for="item in artistalbumall.slice(0,artistalbumallnum)" :key="item.id">
+            <img class="aspect-[3/2] w-full rounded-2xl object-cover" :src="item.picUrl" alt="">
+            <h3 class="mt-6 text-lg font-semibold leading-8 text-gray-900">{{ item.name }}</h3>
+            <p class="text-base leading-7 text-gray-600">{{item.subType}}</p>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+    <div class="relative">
+      <div class="absolute inset-0 flex items-center" aria-hidden="true">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center">
+    <span style="cursor: pointer" @click="artistalbumallnumadd" class="bg-white px-2 text-gray-500">
+     加载更多
+    </span>
+      </div>
+    </div>
+
+
+    <div class="bg-white py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:mx-0">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">MV</h2>
+        </div>
+        <ul role="list" class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          <li v-for="item in singermv.slice(0,singermvnum)">
+            <img class="aspect-[3/2] w-full rounded-2xl object-cover" :src="item.imgurl" alt="">
+            <h3 class="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">{{item.name}}</h3>
+            <p class="text-base leading-7 text-gray-600">{{item.playCount}}次播放</p>
+            <p class="text-base leading-7 text-gray-600">{{item.publishTime}}</p>
+          </li>
+
+          <!-- More people... -->
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="relative">
+      <div class="absolute inset-0 flex items-center" aria-hidden="true">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center">
+    <span style="cursor: pointer" @click="singermvadd" class="bg-white px-2 text-gray-500">
+     加载更多
+    </span>
+      </div>
+    </div>
 
 
 
@@ -81,11 +147,18 @@
 </template>
 
 <script>
+//本地存储一串数字
+
+
 import httpurls from "@/httpurl";
 import axios from "axios";
-import ColorThief from '../../../node_modules/colorthief/dist/color-thief.mjs'
 export default {
   name: "hotartists",
+  beforeCreate() {
+    window.scrollTo(0, 0)
+    //获取当前组件的位置
+
+  },
   data() {
     return {
       singerid: '',
@@ -95,9 +168,20 @@ export default {
       topsong1img:'',
       topsong1id:'',
       topsongsname:'',
+      num:6,
+      artistalbumall:'',
+      artistalbumallnum:6,
+      singermv:'',
+      singermvnum:6,
     }
   },
   created() {
+    //js刷新页面
+    if (JSON.parse(localStorage.getItem('is_reloaded')) === 0) {
+      localStorage.setItem('is_reloaded', JSON.stringify(1));
+      console.log('刷新了')
+      window.location.reload();
+    }
     //每当跳转路由就回到顶部
     this.singerid = JSON.parse(localStorage.getItem('singerid'));
     console.log(this.singerid);
@@ -127,16 +211,38 @@ export default {
       }
     }
 
-    //获取当前歌曲评论
+    const artistalbum = async () => {
+      try {
+        const res = await axios.get(`${httpurls}/artist/album?id=${this.singerid}`);
+        console.log(res.data.hotAlbums,'专辑')
+        this.artistalbumall=res.data.hotAlbums;
+      } catch (e) {
+        console.log(e);
+        throw e;
+      }
+    }
 
+    const getsingermv = async () => {
+      try {
+        const res = await axios.get(`${httpurls}/artist/mv?id=${this.singerid}`);
+        console.log(res.data.mvs,'mv')
+        this.singermv=res.data.mvs;
+      } catch (e) {
+        console.log(e);
+        throw e;
+      }
+    }
 
+    //获取歌手mv
     hotartistsmsg();
     //获取热门歌手
     topsong();
-    //提取图片主色调
+    //获取歌手热门歌曲
+    artistalbum();
+    //获取歌手专辑
+    getsingermv();
   },
   mounted() {
-    // 提取图片主色调
     let getrgb=()=>{
     const img = this.$refs.myImage;
     const canvas = document.createElement("canvas");
@@ -160,6 +266,7 @@ export default {
       const avgR = r / pixelCount;
       const avgG = g / pixelCount;
       const avgB = b / pixelCount;
+      //让背景颜色渐渐的变化
       document.getElementById('bg').style.background = `rgb(${avgR},${avgG},${avgB})`;
     };
     }
@@ -194,9 +301,32 @@ export default {
 
     getrgb();
     getrgbsing();
+  },
+  methods:
+  {
+    clicknum()
+    {
+      this.num+=6;
+    },
+    artistalbumallnumadd()
+    {
+      this.artistalbumallnum+=6;
+    },
+    singermvadd()
+    {
+      this.singermvnum+=6;
+    },
+    sendsinsid(id)
+    {
+      //全局事件总线提交
+      this.$bus.$emit('sendsinsid',id);
+      localStorage.setItem('singerid', JSON.stringify(id));
+    }
+  },
+  beforeDestroy() {
+    localStorage.setItem('is_reloaded', JSON.stringify(0));
   }
 }
-
 
 
 </script>
