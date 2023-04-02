@@ -22,7 +22,6 @@
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:mx-0">
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">全部新碟</h2>
-            <p class="mt-6 text-lg leading-8 text-gray-600">{{ this.$store.state.todayshici.content }}</p>
           </div>
           <ul role="list" class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <li v-for="item in allbumnew">
@@ -36,7 +35,7 @@
 
     <!--    -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
 
-        <div class="bg-white py-16 sm:py-24">
+        <div @click="sendsongsmsg(hotartists.id)" class="bg-white py-16 sm:py-24">
           <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="relative overflow-hidden bg-gray-900 py-20 px-6 shadow-xl sm:rounded-3xl sm:py-24 sm:px-10 md:px-12 lg:px-20">
               <img class="singimg absolute inset-0 w-full  object-cover brightness-150 saturate-0 scale-[6]" :src="hotartists.picUrl" alt="">
@@ -61,8 +60,8 @@
                     <p>{{ hotartists.name }}</p>
                   </blockquote>
                   <figcaption class="mt-6 text-base text-white">
-                    <div class="font-semibold">{{ hotartists.alias[0]}}</div>
-                    <div class="mt-1">{{ hotartists.alias[1]}}</div>
+<!--                    <div class="font-semibold">{{ hotartists.alias[0]}}</div>-->
+<!--                    <div class="mt-1">{{ hotartists.alias[1]}}</div>-->
                   </figcaption>
                 </figure>
               </div>
@@ -135,22 +134,16 @@ export default {
     const gethotartists = async () => {
       try {
         const res = await axios.get(`${httpurls}/top/artists?&limit=30`);
-        this.hotartists = res.data.artists[0]
+        const redrom = Math.floor(Math.random() * 30);
+        this.hotartists = res.data.artists[redrom];
+        console.log(this.hotartists)
       } catch (e) {
         console.log(e);
         throw e;
       }
     };
 
-    const getpersonalized = async () => {
-      try {
-        const res = await axios.get(`${httpurls}/personalized?&limit=8`);
-        this.personalized = res.data.result;
-      } catch (e) {
-        console.log(e);
-        throw e;
-      }
-    };
+
 
     getmsg();
     //网友精选
@@ -158,12 +151,16 @@ export default {
     //全部新碟
     gethotartists();
     //热门歌手
-    getpersonalized();
   },
   methods: {
     sendsingmassage(item) {
       this.$router.push({path: '/homepage/singlistpage', query: {item}});
       localStorage.setItem('singlist', JSON.stringify(item));
+    },
+    sendsongsmsg(id)
+    {
+      this.$router.push({path: '/homepage/hotartists', query: {id}});
+      localStorage.setItem('singerid', JSON.stringify(id));
     }
   },
   mounted() {

@@ -6,6 +6,8 @@ import newsingall from "@/components/pages/newsingall.vue";
 import login from "@/components/login.vue";
 import userhome from "@/components/pages/userhome.vue";
 import artistdetails from "@/components/pages/artistdetails.vue";
+import allbumnew from "@/components/pages/hotartists.vue";
+import hotartists from "@/components/pages/hotartists.vue";
 
 let getcooike;
 const routes = [
@@ -47,6 +49,11 @@ const routes = [
                 path: '/homepage/artistdetails',
                 name: 'artistdetails',
                 component:artistdetails
+            },
+            {
+                path: '/homepage/hotartists',
+                name: 'hotartists',
+                component: hotartists
             }
         ]
     }
