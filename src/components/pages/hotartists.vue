@@ -105,6 +105,7 @@ export default {
       try {
         const res = await axios.get(`${httpurls}/artist/detail?id=${this.singerid}`);
         this.singermsg = res.data.data.artist;
+        console.log(this.singermsg)
       } catch (e) {
         console.log(e);
         throw e;
