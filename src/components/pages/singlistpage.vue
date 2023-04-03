@@ -21,7 +21,7 @@
                       <h4 class="text-sm">
                         <a href="#" class="font-medium text-white hover:text-gray-800">{{ item.name }}</a>
                       </h4>
-                      <svg @click="sendplaysingmassage(item)" class="point" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="m4.25 3l1.166-.624l8 5.333v1.248l-8 5.334l-1.166-.624V3zm1.5 1.401v7.864l5.898-3.932L5.75 4.401z" clip-rule="evenodd"/></svg>
+                      <svg @click="sendsinsid(item.id)" class="point" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="m4.25 3l1.166-.624l8 5.333v1.248l-8 5.334l-1.166-.624V3zm1.5 1.401v7.864l5.898-3.932L5.75 4.401z" clip-rule="evenodd"/></svg>
                     </div>
                     <p class="mt-1 text-sm text-gray-500"></p>
 
@@ -66,6 +66,12 @@ export default {
     {
       localStorage.setItem('sendplaysing',JSON.stringify(item));
       this.$bus.$emit('playsing',item);
+    },
+    sendsinsid(id)
+    {
+      //全局事件总线提交
+      this.$bus.$emit('sendsinsid',id);
+      localStorage.setItem('singerid', JSON.stringify(id));
     }
   },
   created() {

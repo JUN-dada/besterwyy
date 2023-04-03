@@ -133,7 +133,7 @@ export default {
 
     const gethotartists = async () => {
       try {
-        const res = await axios.get(`${httpurls}/top/artists?&limit=30`);
+        const res = await axios.get(`${httpurls}top/artists?&limit=30`);
         const redrom = Math.floor(Math.random() * 30);
         this.hotartists = res.data.artists[redrom];
         console.log(this.hotartists)

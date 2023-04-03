@@ -13,7 +13,7 @@ const routes = [
     },
     {
         path: '/',
-        redirect:'/login',
+        redirect:'/homepage',
     },
     {
         path: '/homepage',
@@ -49,6 +49,11 @@ const routes = [
                 path: '/homepage/hotartists',
                 name: 'hotartists',
                 component: () => import('@/components/pages/hotartists.vue')
+            },
+            {
+                path: '/homepage/search',
+                name: 'search',
+                component: ()=>import('@/components/pages/search.vue')
             }
         ]
     }

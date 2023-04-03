@@ -1,106 +1,96 @@
 <template>
-  <div class="w-full h-full">
-    <div class="fixed inset-x-0 bottom-0 z-10 lg:left-112 xl:left-120">
-      <div
-          class="flex items-center gap-6 bg-white/90 px-4 py-4 shadow shadow-slate-200/80 ring-1 ring-slate-900/5 backdrop-blur-sm md:px-6">
-        <div class="hidden md:block">
-          <button @click="play" type="button"
-                  class="group relative flex flex-shrink-0 items-center justify-center rounded-full  h-14 w-14">
-            <div class="absolute -inset-3 md:hidden"></div>
-            <svg v-show="!isplay" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-              <path fill="currentColor" d="M10.396 18.433L17 12l-6.604-6.433A2 2 0 0 0 7 7v10a2 2 0 0 0 3.396 1.433z"/>
-            </svg>
-            <svg v-show="isplay" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-              <path fill="currentColor"
-                    d="M8 20c-1.654 0-3-1.346-3-3V8c0-1.654 1.346-3 3-3s3 1.346 3 3v9c0 1.654-1.346 3-3 3zM8 7c-.552 0-1 .449-1 1v9a1.001 1.001 0 0 0 2 0V8c0-.551-.448-1-1-1zm7 13c-1.654 0-3-1.346-3-3V8c0-1.654 1.346-3 3-3s3 1.346 3 3v9c0 1.654-1.346 3-3 3zm0-13c-.552 0-1 .449-1 1v9a1.001 1.001 0 0 0 2 0V8c0-.551-.448-1-1-1z"/>
-            </svg>
-          </button>
-        </div>
-        <div class="mb-[env(safe-area-inset-bottom)] flex flex-1 flex-col gap-3 overflow-hidden p-1"><a
-            class="truncate text-center text-sm font-bold leading-6 md:text-left">
-          {{ songmsg.name }}</a>
-          <div class="flex justify-between gap-6">
-            <div class="flex items-center md:hidden">
-              <button type="button"
-                      class="group relative rounded-md hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:order-none"
-                      aria-label="Mute">
-                <div class="absolute -inset-4 md:hidden"></div>
-                <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"
-                     stroke-linejoin="round"
-                     class="h-6 w-6 fill-slate-500 stroke-slate-500 group-hover:fill-slate-700 group-hover:stroke-slate-700">
-                  <path d="M12 6L8 10H6C5.44772 10 5 10.4477 5 11V13C5 13.5523 5.44772 14 6 14H8L12 18V6Z"></path>
-                  <path d="M17 7C17 7 19 9 19 12C19 15 17 17 17 17" fill="none"></path>
-                  <path d="M15.5 10.5C15.5 10.5 16 10.9998 16 11.9999C16 13 15.5 13.5 15.5 13.5" fill="none"></path>
-                </svg>
-              </button>
-            </div>
-            <div class="flex flex-none items-center gap-4">
-              <button type="button" class="group relative rounded-full focus:outline-none"
-                      aria-label="Rewind 10 seconds">
-                <div class="absolute -inset-4 -right-2 md:hidden"></div>
-                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"
-                     stroke-linejoin="round" class="h-6 w-6 stroke-slate-500 group-hover:stroke-slate-700">
-                  <path
-                      d="M8 5L5 8M5 8L8 11M5 8H13.5C16.5376 8 19 10.4624 19 13.5C19 15.4826 18.148 17.2202 17 18.188"></path>
-                  <path d="M5 15V19"></path>
-                  <path
-                      d="M8 18V16C8 15.4477 8.44772 15 9 15H10C10.5523 15 11 15.4477 11 16V18C11 18.5523 10.5523 19 10 19H9C8.44772 19 8 18.5523 8 18Z"></path>
-                </svg>
-              </button>
-              <audio id="audio" ref="audio" :src="songsurl"></audio>
-              <div class="md:hidden">
-                <button type="button"
-                        class="group relative flex flex-shrink-0 items-center justify-center rounded-full bg-slate-700 hover:bg-slate-900 focus:outline-none focus:ring-slate-700 h-10 w-10 focus:ring-2 focus:ring-offset-2"
-                        aria-label="Play">
-                  <div class="absolute -inset-3 md:hidden"></div>
-                  <svg aria-hidden="true" viewBox="0 0 36 36" class="fill-white group-active:fill-white/80 h-5 w-5">
-                    <path
-                        d="M33.75 16.701C34.75 17.2783 34.75 18.7217 33.75 19.299L11.25 32.2894C10.25 32.8668 9 32.1451 9 30.9904L9 5.00962C9 3.85491 10.25 3.13323 11.25 3.71058L33.75 16.701Z"></path>
-                  </svg>
-                </button>
-              </div>
-              <button type="button" class="group relative rounded-full focus:outline-none"
-                      aria-label="Fast-forward 10 seconds">
-                <div class="absolute -inset-4 -left-2 md:hidden"></div>
-                {{ currentDuration }}
-              </button>
-            </div>
-            <div class="flex items-center gap-4">
-              <div class="flex items-center">
-                <button type="button"
-                        class="relative flex h-6 w-6 items-center justify-center rounded-md text-slate-500 hover:bg-slate-100 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
-                        aria-label="Playback rate">
-                  <div class="absolute -inset-4 md:hidden"></div>
-                  <span>{{ songsalltime }}</span>
-                </button>
-              </div>
-              <div class="hidden items-center md:flex">
-                <button type="button"
-                        class="group relative rounded-md hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:order-none"
-                        aria-label="Mute">
-                  <div class="absolute -inset-4 md:hidden"></div>
-                  <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"
-                       stroke-linejoin="round"
-                       class="h-6 w-6 fill-slate-500 stroke-slate-500 group-hover:fill-slate-700 group-hover:stroke-slate-700">
-                    <path d="M12 6L8 10H6C5.44772 10 5 10.4477 5 11V13C5 13.5523 5.44772 14 6 14H8L12 18V6Z"></path>
-                    <path d="M17 7C17 7 19 9 19 12C19 15 17 17 17 17" fill="none"></path>
-                    <path d="M15.5 10.5C15.5 10.5 16 10.9998 16 11.9999C16 13 15.5 13.5 15.5 13.5" fill="none"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="w-full h-full">
+  <div class="w-full h-full flex absolute z-30" id="topbox">
+    <audio ref="audio" id="audio" :src="songsurl"></audio>
+    <img ref="songimg" :src="songimg" style="display: none">
+    <div class="w-1/6 h-full  flex justify-center items-center">
+      <span>{{ songmsg.name }} {{currentDuration}}</span>
+      <svg @click="play"  v-show="!isplay" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6 6.741c0-1.544 1.674-2.505 3.008-1.728l9.015 5.26c1.323.771 1.323 2.683 0 3.455l-9.015 5.258C7.674 19.764 6 18.803 6 17.26V6.741zM17.015 12L8 6.741V17.26L17.015 12z"/></svg>
+      <svg @click="play" v-show="isplay" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M9 6a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V7a1 1 0 0 1 1-1zm6 0a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V7a1 1 0 0 1 1-1z"/></svg>
+    </div>
+
+    <div class="w-4/6 h-full flex items-center ">
+      <div class="w-full h-1/4 rounded-full" id="jtd"></div>
+    </div>
+
+    <div class="w-1/6 h-full  flex justify-center items-center">
+      <span>{{songsalltime}}</span>
     </div>
   </div>
+
+<!--  <div class="w-full h-screen relative z-20">-->
+
+<!--    <div class="bg-gray-50">-->
+<!--      <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">-->
+<!--        <div class="sm:flex sm:items-baseline sm:justify-between">-->
+<!--          <h2 class="text-2xl font-bold tracking-tight text-gray-900">{{songmsg.name}}</h2>-->
+
+<!--        </div>-->
+
+<!--        <div class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">-->
+<!--          <div class="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">-->
+<!--            <img :src="songimg" class="object-cover object-center group-hover:opacity-75">-->
+<!--            <div aria-hidden="true" class="bg-gradient-to-b from-transparent to-black opacity-50"></div>-->
+<!--            <div class="flex items-end p-6">-->
+<!--              <div>-->
+<!--                <h3 class="font-semibold text-white">-->
+<!--                  <a href="#">-->
+<!--                    <span class="absolute inset-0"></span>-->
+<!--                    New Arrivals-->
+<!--                  </a>-->
+<!--                </h3>-->
+<!--                <p aria-hidden="true" class="mt-1 text-sm text-white">Shop now</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-none sm:relative sm:h-full">-->
+<!--            <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-category-01.jpg" alt="Wooden shelf with gray and olive drab green baseball caps, next to wooden clothes hanger with sweaters." class="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full">-->
+<!--            <div aria-hidden="true" class="bg-gradient-to-b from-transparent to-black opacity-50 sm:absolute sm:inset-0"></div>-->
+<!--            <div class="flex items-end p-6 sm:absolute sm:inset-0">-->
+<!--              <div>-->
+<!--                <h3 class="font-semibold text-white">-->
+<!--                  <a href="#">-->
+<!--                    <span class="absolute inset-0"></span>-->
+<!--                    Accessories-->
+<!--                  </a>-->
+<!--                </h3>-->
+<!--                <p aria-hidden="true" class="mt-1 text-sm text-white">Shop now</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-none sm:relative sm:h-full">-->
+<!--            <img src="https://tailwindui.com/img/ecommerce-images/home-page-03-category-02.jpg" alt="Walnut desk organizer set with white modular trays, next to porcelain mug on wooden desk." class="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full">-->
+<!--            <div aria-hidden="true" class="bg-gradient-to-b from-transparent to-black opacity-50 sm:absolute sm:inset-0"></div>-->
+<!--            <div class="flex items-end p-6 sm:absolute sm:inset-0">-->
+<!--              <div>-->
+<!--                <h3 class="font-semibold text-white">-->
+<!--                  <a href="#">-->
+<!--                    <span class="absolute inset-0"></span>-->
+<!--                    Workspace-->
+<!--                  </a>-->
+<!--                </h3>-->
+<!--                <p aria-hidden="true" class="mt-1 text-sm text-white">Shop now</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="mt-6 sm:hidden">-->
+<!--          <a href="#" class="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">-->
+<!--            Browse all categories-->
+<!--            <span aria-hidden="true"> &rarr;</span>-->
+<!--          </a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+</div>
 </template>
 
 <script>
 import axios from "axios";
 import httpurls from "@/httpurl";
-import {data} from "autoprefixer";
-
 export default {
   name: "playsings",
   data() {
@@ -111,10 +101,12 @@ export default {
       songsalltime: "",
       isplay: false,
       currentDuration: "",
-
+      songimg: "",
+      isLoaded: false,
     }
   },
   created() {
+    console.log('1111111')
     let rest = async () => {
       this.songsid = localStorage.getItem("singsg");
       const res = await axios.get(`${httpurls}/song/detail?ids=${this.songsid}`);
@@ -125,6 +117,9 @@ export default {
       console.log(this.songmsg, "this.songmsg");
       //获取歌曲总时长
       const audio = this.$refs.audio;
+      //暂停
+      audio.pause();
+      this.isplay = false;
       // 监听 canplay 事件以确保音频已经可以播放
       audio.addEventListener('canplay', () => {
         // 获取音频的时长
@@ -134,23 +129,30 @@ export default {
         const seconds = Math.floor(duration % 60);
         // 将时长显示在页面上
         this.songsalltime = `${minutes}:${seconds}`;
+        this.isLoaded = true;
+        // 如果当前正在播放，则恢复播放状态
       });
     }
     rest();
   },
   mounted() {
-    let jdt=document.getElementById("jdt");
+
+    document.getElementById('topbox').style.background = localStorage.getItem('playsingsbackgroundcolor');
     this.$bus.$on("sendsinsid", async (data) => {
       localStorage.setItem("singsg", data);
       this.songsid = localStorage.getItem("singsg");
       const res = await axios.get(`${httpurls}/song/detail?ids=${this.songsid}`);
+      //获取歌曲封面
+      this.songimg = res.data.songs[0].al.picUrl;
       this.songmsg = res.data.songs[0];
       const songsurl = await axios.get(`${httpurls}/song/url?id=${this.songsid}`);
+
       this.songsurl = songsurl.data.data[0].url;
       console.log(this.songsurl, "this.songsurl");
       console.log(this.songmsg, "this.songmsg");
       //获取歌曲总时长
       const audio = this.$refs.audio;
+      document.getElementById('jtd').style.width = '0px';
       // 监听 canplay 事件以确保音频已经可以播放
       audio.removeEventListener('canplay', audio.duration);
       audio.addEventListener('canplay', () => {
@@ -173,8 +175,63 @@ export default {
       const currentSeconds = Math.floor(currentTime % 60);
       // 将当前播放时间显示在页面上
       this.currentDuration = `${currentMinutes.toString().padStart(2, '0')}:${currentSeconds.toString().padStart(2, '0')}`;
-      //获取进度条
+      //进度的长度
+      const jtd = document.getElementById('jtd');
+      jtd.style.width = `${(currentTime / audio.duration) * 100}%`;
     });
+
+    //当歌曲可以播放时才执行下面代码
+    audio.addEventListener('canplay', () => {
+      // 获取音频的时长
+      let getrgb = () => {
+        const img = this.$refs.songimg;
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        img.crossOrigin = "anonymous";
+        img.onload = function () {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const pixels = imageData.data;
+          const pixelCount = canvas.width * canvas.height;
+          let r = 0;
+          let g = 0;
+          let b = 0;
+          for (let i = 0; i < pixelCount; i++) {
+            r += pixels[i * 4];
+            g += pixels[i * 4 + 1];
+            b += pixels[i * 4 + 2];
+          }
+          const avgR = r / pixelCount;
+          const avgG = g / pixelCount;
+          const avgB = b / pixelCount;
+          document.getElementById('topbox').style.background = `rgb(${avgR},${avgG},${avgB})`;
+          localStorage.setItem("playsingsbackgroundcolor", `rgb(${avgR},${avgG},${avgB})`);
+          //如果颜色是深色，就将字体颜色改为白色
+          if (avgR < 100 && avgG < 100 && avgB < 100) {
+            document.getElementById('topbox').style.color = '#fff';
+          }
+          //如果颜色是浅色，就将字体颜色改为黑色
+          if (avgR > 100 && avgG > 100 && avgB > 100) {
+            document.getElementById('topbox').style.color = '#000';
+          }
+          //如果背景颜色是浅色，就将进度条颜色改为深色
+          if (avgR > 100 && avgG > 100 && avgB > 100)
+          {
+            document.getElementById('jtd').style.background = `rgb(${avgR - 100},${avgG - 100},${avgB - 100})`;
+          }
+
+          //如果背景颜色是深色，就将进度条颜色改为浅色
+          if (avgR < 100 && avgG < 100 && avgB < 100)
+          {
+            document.getElementById('jtd').style.background = `rgb(${avgR + 100},${avgG + 100},${avgB + 100})`;
+          }
+        };
+      }
+      getrgb();
+    });
+
   },
   methods: {
     play() {
