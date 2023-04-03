@@ -1,5 +1,11 @@
 <template>
   <div class="box w-full h-screen absolute">
+
+    <div class="w-full h-[6%] relative z-[60]">
+      <playsings></playsings>
+    </div>
+
+
     <div class="w-full h-[6%] relative top-0 left-0 z-50 opacity-40 ">
       <div class="w-full h-full z-50 flex">
         <div class="w-1/6 h-full flex justify-center items-center">
@@ -136,13 +142,11 @@
     </div>
 
 
-    <div class="w-full h-[86%] overflow-hidden overflow-y-scroll top-0 left-0" style="scroll-behavior: smooth;">
+
+    <div class="w-full h-[88%] overflow-hidden overflow-y-scroll top-0 left-0" style="scroll-behavior: smooth;">
       <router-view></router-view>
     </div>
 
-    <div class="w-full h-[8%] relative z-10">
-      <playsings></playsings>
-    </div>
 
   </div>
 </template>
