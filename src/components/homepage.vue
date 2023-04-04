@@ -1,9 +1,7 @@
 <template>
   <div class="box w-full h-screen absolute">
 
-    <div class="w-full h-[6%] relative z-[60]">
-      <playsings></playsings>
-    </div>
+
 
 
     <div class="w-full h-[6%] relative top-0 left-0 z-50 opacity-40 ">
@@ -147,7 +145,9 @@
       <router-view></router-view>
     </div>
 
-
+    <div class="w-full h-[6%] relative z-[60]">
+      <playsings></playsings>
+    </div>
   </div>
 </template>
 

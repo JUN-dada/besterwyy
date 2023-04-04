@@ -1,12 +1,40 @@
 <template>
   <div class="w-full">
+
+      <div class="w-full">
+        <div class="bg-white">
+          <div aria-hidden="true" class="relative">
+            <img src="../../assets/img/bbly.JPG" alt=""
+                 class="h-96 w-full object-cover object-center">
+            <div class="absolute inset-0 bg-gradient-to-t from-white"></div>
+          </div>
+
+          <div class="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-24 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center lg:max-w-4xl">
+              <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">坂本龙一</h2>
+              <p class="mt-4 text-gray-500">我最后的乐章至此谢幕</p>
+            </div>
+
+            <div class="flex justify-center">
+              <dl class="mt-16  max-w-2xl grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 ">
+                <div class="border-t border-gray-200 pt-4">
+                  <dt class="font-medium text-gray-900">圣诞快乐劳伦斯先生</dt>
+                  <dd class="mt-2 text-sm text-gray-500">𝑀𝑒𝓇𝓇𝓎 𝒞𝒽𝓇𝒾𝓈𝓉𝓂𝒶𝓈 𝑀𝓇.𝐿𝒶𝓌𝓇𝑒𝓃𝒸𝑒</dd>
+                </div>
+              </dl>
+            </div>
+        </div>
+      </div>
+    </div>
+
     <div class="py-24 sm:py-32 w-full h-auto">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:mx-0">
           <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">网友精选</h2>
           <p class="mt-6 text-lg leading-8 text-gray-600">{{ this.$store.state.todayshici.content }}</p>
         </div>
-        <ul role="list" class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        <ul role="list"
+            class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           <li @click="sendsingmassage(item)" v-for="item in getnetizens">
             <img class="aspect-[3/2] w-full rounded-2xl object-cover" alt="" :src="item.coverImgUrl">
             <h3 class="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">{{ item.name }}</h3>
@@ -23,7 +51,8 @@
           <div class="mx-auto max-w-2xl lg:mx-0">
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">全部新碟</h2>
           </div>
-          <ul role="list" class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          <ul role="list"
+              class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <li v-for="item in allbumnew">
               <img class="aspect-[3/2] w-full rounded-2xl object-cover" :src="item.blurPicUrl" alt="">
               <h3 class="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">{{ item.name }}</h3>
@@ -35,64 +64,73 @@
 
     <!--    -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
 
-        <div @click="sendsongsmsg(hotartists.id)" class="bg-white py-16 sm:py-24">
-          <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="relative overflow-hidden bg-gray-900 py-20 px-6 shadow-xl sm:rounded-3xl sm:py-24 sm:px-10 md:px-12 lg:px-20">
-              <img class="singimg absolute inset-0 w-full  object-cover brightness-150 saturate-0 scale-[6]" :src="hotartists.picUrl" alt="">
-              <div class="absolute inset-0 bg-gray-900/90 mix-blend-multiply"></div>
-              <svg viewBox="0 0 1097 845" aria-hidden="true" class="absolute -top-56 -left-80 w-[68.5625rem] transform-gpu blur-3xl">
-                <path fill="url(#68eb76c4-2bc9-4928-860e-70adf05719f4)" fill-opacity=".45" d="M301.174 646.641 193.541 844.786 0 546.172l301.174 100.469 193.845-356.855c1.241 164.891 42.802 431.935 199.124 180.978 195.402-313.696 143.295-588.18 284.729-419.266 113.148 135.13 124.068 367.989 115.378 467.527L811.753 372.553l20.102 451.119-530.681-177.031Z"/>
-                <defs>
-                  <linearGradient id="68eb76c4-2bc9-4928-860e-70adf05719f4" x1="1097.04" x2="-141.165" y1=".22" y2="363.075" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#776FFF"/>
-                    <stop offset="1" stop-color="#FF4694"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-              <svg viewBox="0 0 1097 845" aria-hidden="true" class="hidden md:absolute md:bottom-16 md:left-[50rem] md:block md:w-[68.5625rem] md:transform-gpu md:blur-3xl">
-                <path fill="url(#68eb76c4-2bc9-4928-860e-70adf05719f4)" fill-opacity=".25" d="M301.174 646.641 193.541 844.786 0 546.172l301.174 100.469 193.845-356.855c1.241 164.891 42.802 431.935 199.124 180.978 195.402-313.696 143.295-588.18 284.729-419.266 113.148 135.13 124.068 367.989 115.378 467.527L811.753 372.553l20.102 451.119-530.681-177.031Z"/>
-              </svg>
-              <div class="relative mx-auto max-w-2xl lg:mx-0">
-                <figure>
-                  <blockquote class="mt-6 text-lg font-semibold text-white sm:text-xl sm:leading-8">
-                    <p class="text-3xl">热门歌手</p>
-                    <p>&nbsp;</p>
-                    <p>{{ hotartists.name }}</p>
-                  </blockquote>
-                  <figcaption class="mt-6 text-base text-white">
-<!--                    <div class="font-semibold">{{ hotartists.alias[0]}}</div>-->
-<!--                    <div class="mt-1">{{ hotartists.alias[1]}}</div>-->
-                  </figcaption>
-                </figure>
+    <div @click="sendsongsmsg(hotartists.id)" class="bg-white py-16 sm:py-24">
+      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div
+            class="relative overflow-hidden bg-gray-900 py-20 px-6 shadow-xl sm:rounded-3xl sm:py-24 sm:px-10 md:px-12 lg:px-20">
+          <img class="singimg absolute inset-0 w-full  object-cover brightness-150 saturate-0 scale-[6]"
+               :src="hotartists.picUrl" alt="">
+          <div class="absolute inset-0 bg-gray-900/90 mix-blend-multiply"></div>
+          <svg viewBox="0 0 1097 845" aria-hidden="true"
+               class="absolute -top-56 -left-80 w-[68.5625rem] transform-gpu blur-3xl">
+            <path fill="url(#68eb76c4-2bc9-4928-860e-70adf05719f4)" fill-opacity=".45"
+                  d="M301.174 646.641 193.541 844.786 0 546.172l301.174 100.469 193.845-356.855c1.241 164.891 42.802 431.935 199.124 180.978 195.402-313.696 143.295-588.18 284.729-419.266 113.148 135.13 124.068 367.989 115.378 467.527L811.753 372.553l20.102 451.119-530.681-177.031Z"/>
+            <defs>
+              <linearGradient id="68eb76c4-2bc9-4928-860e-70adf05719f4" x1="1097.04" x2="-141.165" y1=".22" y2="363.075"
+                              gradientUnits="userSpaceOnUse">
+                <stop stop-color="#776FFF"/>
+                <stop offset="1" stop-color="#FF4694"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <svg viewBox="0 0 1097 845" aria-hidden="true"
+               class="hidden md:absolute md:bottom-16 md:left-[50rem] md:block md:w-[68.5625rem] md:transform-gpu md:blur-3xl">
+            <path fill="url(#68eb76c4-2bc9-4928-860e-70adf05719f4)" fill-opacity=".25"
+                  d="M301.174 646.641 193.541 844.786 0 546.172l301.174 100.469 193.845-356.855c1.241 164.891 42.802 431.935 199.124 180.978 195.402-313.696 143.295-588.18 284.729-419.266 113.148 135.13 124.068 367.989 115.378 467.527L811.753 372.553l20.102 451.119-530.681-177.031Z"/>
+          </svg>
+          <div class="relative mx-auto max-w-2xl lg:mx-0">
+            <figure>
+              <blockquote class="mt-6 text-lg font-semibold text-white sm:text-xl sm:leading-8">
+                <p class="text-3xl">热门歌手</p>
+                <p>&nbsp;</p>
+                <p>{{ hotartists.name }}</p>
+              </blockquote>
+              <figcaption class="mt-6 text-base text-white">
+                <!--                    <div class="font-semibold">{{ hotartists.alias[0]}}</div>-->
+                <!--                    <div class="mt-1">{{ hotartists.alias[1]}}</div>-->
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="bg-white">
+      <div class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900">推荐歌单</h2>
+
+        <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+          <div v-for="item in personalized" :key="item.id" class="group relative">
+            <div
+                class="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+              <img :src="item.picUrl" alt="Front of men&#039;s Basic Tee in black."
+                   class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+            </div>
+            <div class="mt-4 flex justify-between">
+              <div>
+                <h3 class="text-sm text-gray-700">
+                  <a href="#">
+                    <span aria-hidden="true" class="absolute inset-0"></span>
+                    {{ item.name }}
+                  </a>
+                </h3>
               </div>
             </div>
           </div>
         </div>
-
-
-        <div class="bg-white">
-          <div class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-            <h2 class="text-2xl font-bold tracking-tight text-gray-900">推荐歌单</h2>
-
-            <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-              <div v-for="item in personalized" :key="item.id" class="group relative">
-                <div class="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
-                  <img :src="item.picUrl" alt="Front of men&#039;s Basic Tee in black." class="h-full w-full object-cover object-center lg:h-full lg:w-full">
-                </div>
-                <div class="mt-4 flex justify-between">
-                  <div>
-                    <h3 class="text-sm text-gray-700">
-                      <a href="#">
-                        <span aria-hidden="true" class="absolute inset-0"></span>
-                        {{ item.name }}
-                      </a>
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -100,6 +138,7 @@
 import store from "@/store/main";
 import axios from "axios";
 import httpurls from "@/httpurl";
+
 export default {
   name: "principalpage",
   data() {
@@ -144,7 +183,6 @@ export default {
     };
 
 
-
     getmsg();
     //网友精选
     getallbumnew();
@@ -157,8 +195,7 @@ export default {
       this.$router.push({path: '/homepage/singlistpage', query: {item}});
       localStorage.setItem('singlist', JSON.stringify(item));
     },
-    sendsongsmsg(id)
-    {
+    sendsongsmsg(id) {
       this.$router.push({path: '/homepage/hotartists', query: {id}});
       localStorage.setItem('singerid', JSON.stringify(id));
       localStorage.setItem('is_reloaded', JSON.stringify(0));
