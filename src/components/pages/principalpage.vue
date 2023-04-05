@@ -1,11 +1,11 @@
 <template>
   <div class="w-full">
 
-      <div class="w-full">
+      <div @click="sendsongsmsg(15289)" class="w-full">
         <div class="bg-white">
-          <div aria-hidden="true" class="relative">
-            <img src="../../assets/img/bbly.JPG" alt=""
-                 class="h-96 w-full object-cover object-center">
+          <div aria-hidden="true" class="relative overflow-hidden">
+            <img src="https://imgmo.com/images/2023/04/04/2045748776b7a23eeff798774dda4e2e.jpg" alt=""
+                 class="h-96 w-full object-cover object-center" >
             <div class="absolute inset-0 bg-gradient-to-t from-white"></div>
           </div>
 
@@ -147,6 +147,7 @@ export default {
       allbumnew: '',
       hotartists: '',
       personalized: '',
+      imgurl:'@/assets/img/bbly.JPG'
     }
   },
   created() {
@@ -226,4 +227,6 @@ export default {
     transform: translateY(-100px);
   }
 }
+
+
 </style>

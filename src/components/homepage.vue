@@ -1,9 +1,6 @@
 <template>
   <div class="box w-full h-screen absolute">
 
-
-
-
     <div class="w-full h-[6%] relative top-0 left-0 z-50 opacity-40 ">
       <div class="w-full h-full z-50 flex">
         <div class="w-1/6 h-full flex justify-center items-center">
@@ -22,7 +19,6 @@
 
         <div class="w-full h-full flex justify-end">
           <div class="w-1/6 h-full flex justify-center items-center">
-
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">-->
               <g fill="none" stroke="currentColor" stroke-dasharray="28" stroke-dashoffset="28" stroke-linecap="round" stroke-width="2">
                 <path d="M4 21V20C4 16.6863 6.68629 14 10 14H14C17.3137 14 20 16.6863 20 20V21">
