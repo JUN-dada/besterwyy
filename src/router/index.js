@@ -3,7 +3,6 @@ import principalpage from "@/components/pages/principalpage.vue";
 import homepage from "@/components/homepage.vue";
 import login from "@/components/login.vue";
 
-
 let getcooike;
 const routes = [
     {

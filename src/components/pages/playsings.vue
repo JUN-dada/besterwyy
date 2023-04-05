@@ -20,6 +20,7 @@
       </ul>
     </div>
 
+
     <div id="full" class="w-full h-screen relative -z-10">
       <div class="w-full h-full overflow-hidden" id="secendbox">
         <div class="">

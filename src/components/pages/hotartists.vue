@@ -2,6 +2,7 @@
   <div class="w-full h-auto">
 
 
+
     <div id="bg" ref="background" class="py-24 sm:py-32">
       <div class="relative isolate">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">

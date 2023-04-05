@@ -5,6 +5,7 @@
         <img class="w-full blur-3xl" :src="airtistdescuser.backgroundUrl" alt="">
       </div>
 
+
       <div class="w-full h-5/6 relative z-30  flex justify-center items-center">
         <div class="w-1/12 h-2/6 overflow-hidden">
           <img class="h-full" :src="airtistdetail.cover" alt="">

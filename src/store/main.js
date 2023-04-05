@@ -26,7 +26,6 @@ const actions = {
         }
     },
 };
-
 const mutations = {
     setNewKey(state, value) {
         state.newkey = value
