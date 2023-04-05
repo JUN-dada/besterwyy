@@ -1,68 +1,117 @@
 <template>
   <div class="w-full h-screen">
-    <div class="relative h-full bg-white">
-      <div class="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 ">
-        <div class="px-6 pt-10 pb-24 sm:pb-32 lg:col-span-7 lg:px-0 lg:pt-48 lg:pb-56 xl:col-span-6">
-          <div class="mx-auto max-w-2xl lg:mx-0">
-            <div class="hidden sm:mt-32 sm:flex lg:mt-16">
+    <!--
+   This example requires some changes to your config:
+
+   ```
+   // tailwind.config.js
+   module.exports = {
+     // ...
+     plugins: [
+       // ...
+       require('@tailwindcss/forms'),
+     ],
+   }
+   ```
+ -->
+    <!--
+      This example requires updating your template:
+
+      ```
+      <html class="h-full bg-white">
+      <body class="h-full">
+      ```
+    -->
+    <div class="flex min-h-full">
+      <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+        <div class="mx-auto w-full max-w-sm lg:w-96">
+          <div>
+            <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">扫码登录捏</h2>
+            <p class="mt-2 text-sm text-gray-600">
+              <span class="font-medium text-indigo-600 hover:text-indigo-500">诗词</span>
+            </p>
+          </div>
+
+          <div class="mt-8">
+            <div>
+              <div>
+                <img :src="qrimg">
+              </div>
+
+              <div class="relative mt-6">
+                <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                  <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+
+                </div>
+              </div>
             </div>
-            <h1 class="mt-24 text-4xl font-bold tracking-tight text-gray-900 sm:mt-10 sm:text-6xl">扫码登录</h1>
-            <p class="mt-6 text-lg leading-8 text-gray-600">{{ lovemsg }}</p>
-            <div class="mt-10 flex items-center gap-x-6">
-              <img :src="qrimg">
+
+            <div class="mt-6">
+              <div class="space-y-6">
+                <div>
+                  <button type="submit"
+                          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    Sign in
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
-          <img class="aspect-[3/2] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full" src="https://images.unsplash.com/photo-1498758536662-35b82cd15e29?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2102&q=80" alt="">
-        </div>
+      </div>
+      <div class="relative hidden w-0 flex-1 lg:block">
+        <img class="absolute inset-0 h-full w-full object-cover"
+             src="https://images.unsplash.com/photo-1505904267569-f02eaeb45a4c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
+             alt="">
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
+let timer;
 import axios from "axios";
+import httpurls from "@/httpurl";
+
+let timber;
 let getcookie;
 export default {
   name: "login",
   data() {
     return {
       qrimg: '',
-      lovemsg: '',
-      msg: '',
-      rounder: Math.floor(Math.random() * 12)
     }
   },
   created() {
-    this.someFunction()
-  },
-  methods:
-      {
-        async someFunction() {
-          await this.$store.dispatch('getlovemassage')
-          await this.$store.dispatch('getqrkey');
-          await this.$store.dispatch('getqrimg');
-          await this.$store.dispatch('getqrstate');
-          await this.$store.dispatch('getuserlogin');
-          await this.$store.dispatch('getuserdetail');
-          this.qrimg = this.$store.state.newqrimg;
-          this.lovemsg = this.$store.state.lovemassage;
+    let login = async () => {
+      let getqrkey = await axios.post(`/api/login/qr/key?timestamp=${Date.now()}`);
+      let key = getqrkey.data.data.unikey;
+      let qrimg = await axios.post(`/api/login/qr/create?key=${key}&timestamp=${Date.now()}&qrimg=true`);
+      this.qrimg = qrimg.data.data.qrimg;
+      timber= setInterval(async () => {
+        let userlogin = await axios.post(`/api/login/qr/check?key=${key}&timestamp=${Date.now()}`);
+        if (userlogin.data.code === 803) {
+          // this.$router.push({path: "/homepage"});
+          console.log(userlogin.data.cookie);
+          localStorage.setItem("usermasgcookie", userlogin.data.cookie);
+          //获取登录状态
+          let getlogin = await axios.post(`/api/login/status?timestamp=${Date.now()}&${userlogin.data.cookie}`);
+          console.log(getlogin.data);
+          localStorage.setItem("usermasg", JSON.stringify(getlogin.data));
+          // this.$router.push({path: "/homepage"});
+          return clearInterval(timber);
         }
-      },
-  mounted() {
-    getcookie= setInterval(() => {
-      let cookie = localStorage.getItem('cookie');
-      if (cookie != null) {
-        this.$router.push('/homepage')
-      } else {
-        this.$router.push('/login')
-      }
-    }, 100)
+      }, 1000)
+    }
+    login();
   },
   beforeDestroy() {
-    clearInterval(getcookie)
+    clearInterval(timber);
   }
+
 }
 </script>
 

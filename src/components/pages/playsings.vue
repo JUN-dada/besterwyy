@@ -1,28 +1,24 @@
 <template>
   <div class="w-full h-full" id="topbox">
-
-    <div class="w-full h-full flex absolute z-30" id="inbox">
-      <audio ref="audio" id="audio" :src="songsurl"></audio>
-      <img ref="songimg" :src="songimg" style="display: none">
-      <div class="w-1/6 h-full  flex justify-center items-center">
-        <span>{{ songmsg.name }} {{ currentDuration }}</span>
-        <svg @click="play" v-show="!isplay" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-          <path fill="currentColor" d="M6 6.741c0-1.544 1.674-2.505 3.008-1.728l9.015 5.26c1.323.771 1.323 2.683 0 3.455l-9.015 5.258C7.674 19.764 6 18.803 6 17.26V6.741zM17.015 12L8 6.741V17.26L17.015 12z"/>
-        </svg>
-        <svg @click="play" v-show="isplay" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-          <path fill="currentColor" d="M9 6a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V7a1 1 0 0 1 1-1zm6 0a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V7a1 1 0 0 1 1-1z"/>
-        </svg>
-      </div>
-
-      <div class="w-4/6 h-full flex items-center ">
-        <div class="w-full h-1/4 rounded-full" id="jtd"></div>
-      </div>
-      <div class="w-1/6 h-full  flex justify-center items-center">
-        <span>{{ songsalltime }}</span>
-        <span @click="test">点击</span>
-      </div>
+    <audio ref="audio" id="audio" :src="songurl"></audio>
+    <img id="canvansimg" ref="canvansimg" class="hidden" :src="songsimg">
+    <div class="w-full h-full absolute z-30" id="box">
+      <ul role="list" class="w-full h-full">
+        <li class="flex py-4 w-full h-full">
+          <div class="ml-3 w-full h-full">
+            <div class="text-sm font-medium flex">
+              <div><span>{{songsname}}</span></div>
+              <div><span>{{songsnowtime}}</span></div>
+              <div id="play" @click="play"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M10.396 18.433L17 12l-6.604-6.433A2 2 0 0 0 7 7v10a2 2 0 0 0 3.396 1.433z"/></svg></div>
+              <div><span>{{duration}}</span></div>
+            </div>
+            <div class="">
+              <el-slider class="" :max="singalllong" v-model="songsnow" :show-tooltip="false" :style="{ backgroundColor: `${rgb}`,borderColor: '#0000ff' }"></el-slider>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
-
 
     <div id="full" class="w-full h-screen relative -z-10">
       <div class="w-full h-full overflow-hidden" id="secendbox">
@@ -45,7 +41,7 @@
                 <div class="aspect-h-1 aspect-w-1 w-full">
                   <!-- Tab panel, show/hide based on tab state. -->
                   <div id="tabs-1-panel-1" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
-                    <img :src="songimg" class="h-full w-full object-cover object-center sm:rounded-lg">
+                    <img :src="songsimg" class="h-full w-full object-cover object-center sm:rounded-lg">
                   </div>
 
 
@@ -53,32 +49,36 @@
               </div>
 
               <div class="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-                <h1 class="text-5xl font-bold tracking-tight">{{ songmsg.name }}</h1>
+                <h1 class="text-5xl font-bold tracking-tight">{{songsname  }}</h1>
 
                 <div class="mt-3">
-                  <p v-for="item in singer" :key="item.id" class="text-3xl tracking-tight">
-                    <span>{{ item.name }}</span>
+                  <p v-for="item in singername" class="text-3xl tracking-tight">
+                    <span>{{item.name}}</span>
                   </p>
                 </div>
 
                 <!-- Reviews -->
                 <div class="mt-3">
-                  <h3 class="sr-only">Reviews</h3>
+                  <h3 class="sr-only"></h3>
                   <div class="flex items-center">
                   </div>
                 </div>
 
                 <div class="mt-6">
-                  <h3 class="sr-only">Description</h3>
+                  <h3 class="sr-only"></h3>
 
                   <div class="space-y-6 text-base text-gray-700">
                     <p></p>
                   </div>
                 </div>
 
-                <div class="mt-6">
-                  <div class="sm:flex-col1 mt-10 flex">
-                    <!--                    //歌词-->1
+                <div class="mt-6" id="full">
+                  <div class="sm:flex-col1 mt-10 flex w-full h-96 overflow-y-auto" >
+                    <ul>
+                      <li v-for="item in endyric" class="text-3xl tracking-tight leading-[6rem]">
+                        <span class="font-black leading-[3rem]">{{item.text}}</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -89,6 +89,7 @@
 
       </div>
     </div>
+
   </div>
 </template>
 
@@ -100,108 +101,66 @@ export default {
   name: "playsings",
   data() {
     return {
-      songsid: "",
-      songmsg: "",
-      singer: '',
-      songsurl: "",
-      songsalltime: "",
-      isplay: false,
-      currentDuration: "",
-      songimg: "",
-      isLoaded: false,
-      heighttof: false,
-      songlyric: "",
+      singsid: '',
+      songsname: '',
+      songsimg: '',
+      songurl: '',
+      singalllong: '',
+      songsnow: '',
+      duration: '',
+      songsnowtime: '',
+      rgb: '',
+      singername: '',
+      songlyric: '',
+      endyric: '',
     }
   },
   created() {
-    console.log('1111111')
-    let rest = async () => {
-      this.songsid = localStorage.getItem("singsg");
-
-      const res = await axios.get(`${httpurls}/song/detail?ids=${this.songsid}`);
-      this.songmsg = res.data.songs[0];
-      const songsurl = await axios.get(`${httpurls}/song/url?id=${this.songsid}`);
-      this.songsurl = songsurl.data.data[0].url;
-      console.log(this.songsurl, "this.songsurl");
-      console.log(this.songmsg, "this.songmsg");
-      //获取歌曲总时长
-      const audio = this.$refs.audio;
-      //暂停
-      audio.pause();
-      this.isplay = false;
-      // 监听 canplay 事件以确保音频已经可以播放
-      audio.addEventListener('canplay', () => {
-        // 获取音频的时长
-        const duration = audio.duration;
-        // 将时长转换为分钟和秒钟
-        const minutes = Math.floor(duration / 60);
-        const seconds = Math.floor(duration % 60);
-        // 将时长显示在页面上
-        this.songsalltime = `${minutes}:${seconds}`;
-        this.isLoaded = true;
-        // 如果当前正在播放，则恢复播放状态
-      });
+    console.log('playsings')
+    let cookies = localStorage.getItem('cookies');
+    this.songsname = localStorage.getItem('songsname');
+    this.songsimg = localStorage.getItem('songsimg');
+    this.songurl = localStorage.getItem('songurl');
+    this.singsid = localStorage.getItem('singsid');
+    let songsmsg=async ()=>{
+      console.log('songsmsg')
+      let res = await axios.get(`${httpurls}/song/detail?ids=${this.singsid}`);
+      let songurl = await axios.get(`${httpurls}/song/url?id=${this.singsid}`);
+      let songlyric = await axios.get(`${httpurls}/lyric?id=${this.singsid}`);
+      this.songlyric = songlyric.data.lrc.lyric;
+      const regex = /\[(\d{2}):(\d{2}).(\d{3})\](.*)/g;
+      let match;
+      const parsedLyrics = [];
+      while ((match = regex.exec(this.songlyric))) {
+        console.log(match)
+        const [, minutes, seconds, milliseconds, text] = match;
+        const timeInSeconds = parseInt(minutes) * 60 + parseFloat(seconds);
+        parsedLyrics.push({ time: timeInSeconds, text });
+      }
+      this.endyric=parsedLyrics;
+      this.songsname = res.data.songs[0].name;
+      this.songsimg = res.data.songs[0].al.picUrl;
+      this.songurl = songurl.data.data[0].url;
+      //歌手名字
+      this.singername = res.data.songs[0].ar;
+      localStorage.setItem('songsname', res.data.songs[0].name);
+      localStorage.setItem('songsimg', res.data.songs[0].al.picUrl);
+      localStorage.setItem('songurl', songurl.data.data[0].url);
     }
-    rest();
-  },
-  mounted() {
-    document.getElementById('topbox').style.background = localStorage.getItem('playsingsbackgroundcolor');
-    this.$bus.$on("sendsinsid", async (data) => {
-      console.log(data, 'data');
-      localStorage.setItem("singsg", data);
-      this.songsid = localStorage.getItem("singsg");
-      const res = await axios.get(`${httpurls}/song/detail?ids=${this.songsid}`);
-      this.songmsg = res.data.songs[0];
-      //获取歌手
-      this.singer = this.songmsg.ar;
-      console.log(this.singer, 'this.singer')
-      this.songimg = this.songmsg.al.picUrl;
-      const songsurl = await axios.get(`${httpurls}/song/url?id=${this.songsid}`);
-      this.songsurl = songsurl.data.data[0].url;
-      console.log(this.songsurl, "this.songsurl");
-      console.log(this.songmsg, "this.songmsg");
-      //获取歌词
-      const songlyric = await axios.get(`${httpurls}/lyric?id=${this.songsid}`);
-      console.log(songlyric, 'songlyric')
-      let songgeci = songlyric.data.lrc.lyric;
-      //解析歌词
-      let songgeciarr = songgeci.split('');
-
-
-      //获取歌曲总时长
-      const audio = this.$refs.audio;
-      document.getElementById('jtd').style.width = '0px';
-      // 监听 canplay 事件以确保音频已经可以播放
-      audio.addEventListener('canplay', () => {
-        // 获取音频的时长
-        const duration = audio.duration;
-        // 将时长转换为分钟和秒钟
-        const minutes = Math.floor(duration / 60);
-        const seconds = Math.floor(duration % 60);
-        // 将时长显示在页面上
-        this.songsalltime = `${minutes}:${seconds}`;
-      });
-    });
-    //监听播放时间
-    const audio = this.$refs.audio;
-    audio.addEventListener('timeupdate', () => {
-      // 获取当前播放时间
-      const currentTime = audio.currentTime;
-      // 将当前播放时间转换为分钟和秒钟
-      const currentMinutes = Math.floor(currentTime / 60);
-      const currentSeconds = Math.floor(currentTime % 60);
-      // 将当前播放时间显示在页面上
-      this.currentDuration = `${currentMinutes.toString().padStart(2, '0')}:${currentSeconds.toString().padStart(2, '0')}`;
-      //进度的长度
-      const jtd = document.getElementById('jtd');
-      jtd.style.width = `${(currentTime / audio.duration) * 100}%`;
-    });
-
-    //当歌曲可以播放时才执行下面代码
-    audio.addEventListener('canplay', () => {
-      // 获取音频的时长
-      let getrgb = () => {
-        const img = this.$refs.songimg;
+    songsmsg();
+    this.$nextTick(() => {
+      let audio = document.getElementById('audio');
+      audio.src = this.songurl;
+      console.log('nextTick')
+      audio.oncanplay = ()=> {
+        this.singalllong = audio.duration;
+        //格式化时间
+        let minute = Math.floor(audio.duration / 60);
+        let second = Math.floor(audio.duration % 60);
+        this.duration=`${minute < 10 ? '0' + minute : minute}:${second < 10 ? '0' + second : second}`;
+        // ----------------------------------------------
+        // --------------背景随着歌曲的封面变化--------------------------------
+        const img = this.$refs.canvansimg;
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
         img.crossOrigin = "anonymous";
@@ -223,78 +182,125 @@ export default {
           const avgR = r / pixelCount;
           const avgG = g / pixelCount;
           const avgB = b / pixelCount;
-          console.log(avgR, avgG, avgB)
-          document.getElementById('topbox').style.background = `rgb(${avgR},${avgG},${avgB})`;
-          document.getElementById('secendbox').style.background = `rgb(${avgR},${avgG},${avgB})`;
-          console.log(`rgb(${avgR},${avgG},${avgB})`)
-          localStorage.setItem("playsingsbackgroundcolor", `rgb(${avgR},${avgG},${avgB})`);
-          //如果颜色是深色，就将字体颜色改为白色
+          document.getElementById('box').style.background = `rgb(${avgR/2},${avgG/2},${avgB/2})`;
+          document.getElementById('full').style.background = `rgb(${avgR/2},${avgG/2},${avgB/2})`;
+          localStorage.setItem('boxbg', `rgb(${avgR/2},${avgG/2},${avgB/2})`);
+          //如果颜色过深，字体颜色改为白色
           if (avgR < 100 && avgG < 100 && avgB < 100) {
-            document.getElementById('topbox').style.color = '#fff';
-            document.getElementById('secendbox').style.color = '#fff';
+            document.getElementById('box').style.color = `#fff`;
           }
-          //如果颜色是浅色，就将字体颜色改为黑色
-          if (avgR > 100 && avgG > 100 && avgB > 100) {
-            document.getElementById('topbox').style.color = '#000';
-            document.getElementById('secendbox').style.color = '#fff';
-          }
-          //如果背景颜色是浅色，就将进度条颜色改为深色
-          if (avgR > 100 && avgG > 100 && avgB > 100) {
-            document.getElementById('jtd').style.background = `rgb(${avgR - 100},${avgG - 100},${avgB - 100})`;
-          }
-
-          //如果背景颜色是深色，就将进度条颜色改为浅色
-          if (avgR < 100 && avgG < 100 && avgB < 100) {
-            document.getElementById('jtd').style.background = `rgb(${avgR + 100},${avgG + 100},${avgB + 100})`;
+          //如果颜色过浅，字体颜色改为深色
+          if (avgR > 200 && avgG > 200 && avgB > 200) {
+            document.getElementById('box').style.color = `#000`;
           }
         };
+        // ------------------------------------------------------------------
+        console.log('oncanplay')
       }
-      getrgb();
-    });
-
+      audio.ontimeupdate = () => {
+        this.songsnow = audio.currentTime;
+        let minute = Math.floor(audio.currentTime / 60);
+        let second = Math.floor(audio.currentTime % 60);
+        this.songsnowtime=`${minute < 10 ? '0' + minute : minute}:${second < 10 ? '0' + second : second}`;
+        //背景跟着歌曲变化
+        console.log('ontimeupdate')
+      }
+    })
+  },
+  mounted() {
+    this.$bus.$on('sendsinsid', (data) => {
+      localStorage.setItem('singsid', data)
+      this.singsid = data
+      let songsmsg=async ()=>{
+        let res = await axios.get(`${httpurls}/song/detail?ids=${this.singsid}`);
+        let songurl = await axios.get(`${httpurls}/song/url?id=${this.singsid}`);
+        let songlyric = await axios.get(`${httpurls}/lyric?id=${this.singsid}`);
+        this.songlyric = songlyric.data.lrc.lyric;
+        const regex = /\[(\d{2}):(\d{2}).(\d{3})\](.*)/g;
+        let match;
+        const parsedLyrics = [];
+        while ((match = regex.exec(this.songlyric))) {
+          console.log(match)
+          const [, minutes, seconds, milliseconds, text] = match;
+          const timeInSeconds = parseInt(minutes) * 60 + parseFloat(seconds);
+          parsedLyrics.push({ time: timeInSeconds, text });
+        }
+        this.endyric=parsedLyrics;
+        this.songsimg = res.data.songs[0].al.picUrl;
+        this.songurl = songurl.data.data[0].url;
+        this.songsname = res.data.songs[0].name;
+        this.singername = res.data.songs[0].ar;
+        localStorage.setItem('songsname', res.data.songs[0].name);
+        localStorage.setItem('songsimg', res.data.songs[0].al.picUrl);
+        localStorage.setItem('songurl', songurl.data.data[0].url);
+        localStorage.setItem('songlyric', songlyric.data.lrc.lyric);
+        let audio =await this.$refs.audio;
+        audio.oncanplay = ()=> {
+            this.singalllong = audio.duration;
+            //格式化时间
+              let minute = Math.floor(audio.duration / 60);
+              let second = Math.floor(audio.duration % 60);
+              this.duration=`${minute < 10 ? '0' + minute : minute}:${second < 10 ? '0' + second : second}`;
+            // ----------------------------------------------
+            // --------------背景随着歌曲的封面变化--------------------------------
+            const img = this.$refs.canvansimg;
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            img.crossOrigin = "anonymous";
+            img.onload = function () {
+              canvas.width = img.width;
+              canvas.height = img.height;
+              ctx.drawImage(img, 0, 0);
+              const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+              const pixels = imageData.data;
+              const pixelCount = canvas.width * canvas.height;
+              let r = 0;
+              let g = 0;
+              let b = 0;
+              for (let i = 0; i < pixelCount; i++) {
+                r += pixels[i * 4];
+                g += pixels[i * 4 + 1];
+                b += pixels[i * 4 + 2];
+              }
+              const avgR = r / pixelCount;
+              const avgG = g / pixelCount;
+              const avgB = b / pixelCount;
+              document.getElementById('box').style.background = `rgb(${avgR/2},${avgG/2},${avgB/2})`;
+              document.getElementById('full').style.background = `rgb(${avgR/2},${avgG/2},${avgB/2})`;
+              this.rgb = `rgb(${avgR},${avgG},${avgB})`;
+              localStorage.setItem('boxbg', `rgb(${avgR/2},${avgG/2},${avgB/2})`);
+              //如果颜色过深，字体颜色改为白色
+              if (avgR < 100 && avgG < 100 && avgB < 100) {
+                document.getElementById('box').style.color = `#fff`;
+              }
+              //如果颜色过浅，字体颜色改为深色
+              if (avgR > 200 && avgG > 200 && avgB > 200) {
+                document.getElementById('box').style.color = `#000`;
+              }
+            };
+          // ------------------------------------------------------------------
+        }
+      }
+      songsmsg();
+      this.$refs.audio.ontimeupdate = () => {
+        this.songsnow = audio.currentTime;
+        let minute = Math.floor(audio.currentTime / 60);
+        let second = Math.floor(audio.currentTime % 60);
+        this.songsnowtime=`${minute < 10 ? '0' + minute : minute}:${second < 10 ? '0' + second : second}`;
+        //背景跟着歌曲变化
+      }
+    })
   },
   methods: {
     play() {
-      if (this.isplay) {
-        this.$refs.audio.pause();
-        this.isplay = false;
+      let audio = this.$refs.audio;
+      if (audio.paused) {
+        audio.play();
       } else {
-        this.$refs.audio.play();
-        this.isplay = true;
-      }
-    },
-    updateDuration() {
-      //更新当前播放时间
-      this.currentDuration = this.$refs.audio.currentTime;
-    },
-    hightadd() {
-      if (this.heighttof) {
-        document.getElementById('topbox').style.transition = 'all 1s';
-        document.getElementById('topbox').className = 'w-full h-full bg-amber-200';
-        document.getElementById('inbox').classList.add('up');
-        this.heighttof = false;
-      } else {
-        document.getElementById('topbox').style.transition = 'all 1s';
-        document.getElementById('topbox').className = 'w-full h-screen bg-amber-200';
-        document.getElementById('inbox').classList.add('down');
-        this.heighttof = true;
-      }
-    },
-    test() {
-      if (this.heighttof === false) {
-        document.getElementById('full').className = 'w-full h-screen relative z-20 ';
-        window.scrollTo(0, window.innerHeight);
-        this.heighttof = true;
-      } else {
-        document.getElementById('full').className = 'w-full h-full relative z-20';
-        window.scrollTo(0, 0);
-        this.heighttof = false;
+        audio.pause();
       }
     }
-  },
-  beforeDestroy() {
-    this.$refs.audio.removeEventListener('timeupdate', this.updateDuration);
-  },
+  }
 }
 </script>
 

@@ -4,7 +4,7 @@
       <div @click="sendsongsmsg(15289)" class="w-full">
         <div class="bg-white">
           <div aria-hidden="true" class="relative overflow-hidden">
-            <img src="https://imgmo.com/images/2023/04/04/2045748776b7a23eeff798774dda4e2e.jpg" alt=""
+            <img src="https://pic.imgdb.cn/item/642cca53a682492fcc748d12.png" alt=""
                  class="h-96 w-full object-cover object-center" >
             <div class="absolute inset-0 bg-gradient-to-t from-white"></div>
           </div>
@@ -151,9 +151,17 @@ export default {
     }
   },
   created() {
+    let cookie=JSON.parse(localStorage.getItem('usermsg'));
+    console.log(cookie, 'usermsg')
     const getmsg = async () => {
       try {
-        const res = await axios.get(`${httpurls}/top/playlist?$&limit=6`);
+        // const res = await axios.get(`${httpurls}/top/playlist?$&limit=6&cookie=${cookie}`);
+        //带cookie请求
+        const res = await axios.get(`${httpurls}/top/playlist?$&limit=6`,{
+          headers: {
+            'Cookie': cookie
+          }
+        });
         this.getnetizens = res.data.playlists;
       } catch (e) {
         console.log(e);
@@ -163,7 +171,11 @@ export default {
 
     const getallbumnew = async () => {
       try {
-        const res = await axios.get(`${httpurls}/album/new?&area=ALL&limit=6`);
+        const res = await axios.get(`${httpurls}/album/new?&area=ALL&limit=6`,{
+          headers: {
+            'Cookie': cookie
+          }
+        });
         this.allbumnew = res.data.albums;
       } catch (e) {
         console.log(e);
@@ -173,10 +185,28 @@ export default {
 
     const gethotartists = async () => {
       try {
-        const res = await axios.get(`${httpurls}top/artists?&limit=30`);
+        const res = await axios.get(`${httpurls}top/artists?&limit=30`,{
+          headers: {
+            'Cookie': cookie
+          }
+        });
         const redrom = Math.floor(Math.random() * 30);
         this.hotartists = res.data.artists[redrom];
         console.log(this.hotartists)
+      } catch (e) {
+        console.log(e);
+        throw e;
+      }
+    };
+
+    const getuserplaylist = async () => {
+      try {
+        const res = await axios.get(`${httpurls}/user/account`,{
+          headers: {
+            'Cookie': cookie
+          }
+        });
+        console.log(res,'qwiehqowuehqwhgriqwghr')
       } catch (e) {
         console.log(e);
         throw e;
@@ -190,6 +220,7 @@ export default {
     //全部新碟
     gethotartists();
     //热门歌手
+    getuserplaylist();
   },
   methods: {
     sendsingmassage(item) {
