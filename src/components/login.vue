@@ -1,28 +1,5 @@
 <template>
-  <div class="w-full h-screen">
-    <!--
-   This example requires some changes to your config:
-
-   ```
-   // tailwind.config.js
-   module.exports = {
-     // ...
-     plugins: [
-       // ...
-       require('@tailwindcss/forms'),
-     ],
-   }
-   ```
- -->
-    <!--
-      This example requires updating your template:
-
-      ```
-      <html class="h-full bg-white">
-      <body class="h-full">
-      ```
-    -->
-
+  <div class="w-full h-screen" >
     <div class="flex min-h-full">
       <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div class="mx-auto w-full max-w-sm lg:w-96">
@@ -102,7 +79,8 @@ export default {
           let getlogin = await axios.post(`/api/login/status?timestamp=${Date.now()}&${userlogin.data.cookie}`);
           console.log(getlogin.data);
           localStorage.setItem("usermasg", JSON.stringify(getlogin.data));
-          // this.$router.push({path: "/homepage"});
+          //存储用户id
+          localStorage.setItem("usermasgId", getlogin.data.data.profile.userId);
           return clearInterval(timber);
         }
       }, 1000)

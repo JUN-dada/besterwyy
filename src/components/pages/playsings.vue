@@ -1,8 +1,9 @@
 <template>
   <div class="w-full h-full" id="topbox">
-    <audio ref="audio" id="audio" :src="songurl"></audio>
-    <img id="canvansimg" ref="canvansimg" class="hidden" :src="songsimg">
-    <div class="w-full h-full absolute z-30" id="box">
+
+    <div class="w-full h-full absolute z-30 overflow-hidden" id="box">
+      <audio ref="audio" id="audio" :src="songurl"></audio>
+      <img id="canvansimg" ref="canvansimg" class="hidden" :src="songsimg">
       <ul role="list" class="w-full h-full">
         <li class="flex py-4 w-full h-full">
           <div class="ml-3 w-full h-full">
@@ -21,7 +22,7 @@
     </div>
 
 
-    <div id="full" class="w-full h-screen relative -z-10">
+    <div id="full" class="w-full h-screen hidden  relative -z-10">
       <div class="w-full h-full overflow-hidden" id="secendbox">
         <div class="">
           <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -106,10 +107,10 @@ export default {
       songsname: '',
       songsimg: '',
       songurl: '',
-      singalllong: '',
+      singalllong: 1,
       songsnow: '',
       duration: '',
-      songsnowtime: '',
+      songsnowtime: 0,
       rgb: '',
       singername: '',
       songlyric: '',

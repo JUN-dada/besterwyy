@@ -120,7 +120,6 @@
             <p class="text-base leading-7 text-gray-600">{{ item.playCount }}次播放</p>
             <p class="text-base leading-7 text-gray-600">{{ item.publishTime }}</p>
           </li>
-
           <!-- More people... -->
         </ul>
       </div>

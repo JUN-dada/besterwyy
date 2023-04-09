@@ -30,11 +30,6 @@ const routes = [
                 component: () => import('@/components/pages/singlistpage.vue')
             },
             {
-                path: '/homepage/newsingall',
-                name: 'newsingall',
-                component: () => import('@/components/pages/newsingall.vue')
-            },
-            {
                 path:'/homepage/userhome',
                 name:'userhome',
                 component: ()=>import('@/components/pages/userhome.vue')
@@ -53,8 +48,13 @@ const routes = [
                 path: '/homepage/search',
                 name: 'search',
                 component: ()=>import('@/components/pages/search.vue')
-            }
+            },
         ]
+    },
+    {
+        path:'/userhome',
+        name: "userhome",
+        component: ()=>import('@/components/pages/userhome.vue')
     }
 ]
 
