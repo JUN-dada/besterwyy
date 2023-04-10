@@ -74,6 +74,7 @@ export default {
       coverImgUrl:'',
       description:'',
       playlisttracks:'',
+
     }
   },
   created() {
