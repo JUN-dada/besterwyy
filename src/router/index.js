@@ -12,7 +12,7 @@ const routes = [
     },
     {
         path: '/',
-        redirect:'/homepage',
+        redirect:'/login',
     },
     {
         path: '/homepage',
@@ -49,13 +49,19 @@ const routes = [
                 name: 'search',
                 component: ()=>import('@/components/pages/search.vue')
             },
+            {
+                path:'/homepage/userhome',
+                name: "userhome",
+                component: ()=>import('@/components/pages/userhome.vue')
+            },
+            {
+                path:'/homepage/songpages',
+                name: "songpages",
+                component: ()=>import('@/components/pages/songpages.vue')
+            }
         ]
     },
-    {
-        path:'/userhome',
-        name: "userhome",
-        component: ()=>import('@/components/pages/userhome.vue')
-    }
+
 ]
 
 const router = new VueRouter({

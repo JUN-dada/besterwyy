@@ -29,10 +29,6 @@
             <div class="mt-6">
               <div class="space-y-6">
                 <div>
-                  <button type="submit"
-                          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    Sign in
-                  </button>
                 </div>
               </div>
             </div>
@@ -56,6 +52,7 @@ import httpurls from "@/httpurl";
 
 let timber;
 let getcookie;
+let time2;
 export default {
   name: "login",
   data() {
@@ -89,6 +86,15 @@ export default {
   },
   beforeDestroy() {
     clearInterval(timber);
+  },
+  mounted() {
+    time2 = setInterval(() => {
+      if (localStorage.getItem("usermasg")!==null)
+      {
+        this.$router.push({path: "/homepage"});
+        return clearInterval(time2);
+      }
+    }, 10000)
   }
 
 }

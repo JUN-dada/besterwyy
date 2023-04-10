@@ -1,26 +1,26 @@
 <template>
   <div class="w-full">
 
-      <div @click="sendsongsmsg(15289)" class="w-full">
-        <div class="bg-white">
+      <div @click="sendsongsmsg(45236)" class="w-full">
+        <div class="bg-black">
           <div aria-hidden="true" class="relative overflow-hidden">
-            <img src="https://pic.imgdb.cn/item/642cca53a682492fcc748d12.png" alt=""
-                 class="h-96 w-full object-cover object-center" >
-            <div class="absolute inset-0 bg-gradient-to-t from-white"></div>
+            <video autoplay muted loop src="https://mvod.itunes.apple.com/itunes-assets/HLSMusic112/v4/43/cc/ea/43ccead6-db5d-decf-da2a-51d88551182e/P503899451_Anull_video_gr580_sdr_1920x1080_-.mp4" alt=""
+                   class="h-96 w-full object-cover object-center" ></video>
+            <div class="absolute inset-0 bg-gradient-to-t from-black"></div>
           </div>
 
           <div class="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-24 lg:px-8">
             <div class="mx-auto max-w-2xl text-center lg:max-w-4xl">
-              <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">坂本龙一</h2>
-              <p class="mt-4 text-gray-500">我最后的乐章至此谢幕</p>
+              <h2 class="text-3xl font-bold tracking-tight text-white sm:text-5xl">Avicii</h2>
+              <p class="mt-4 text-white">Where there's a will, there's a way, kind of beautiful</p>
             </div>
 
 
             <div class="flex justify-center">
               <dl class="mt-16  max-w-2xl grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 ">
                 <div class="border-t border-gray-200 pt-4">
-                  <dt class="font-medium text-gray-900">圣诞快乐劳伦斯先生</dt>
-                  <dd class="mt-2 text-sm text-gray-500">𝑀𝑒𝓇𝓇𝓎 𝒞𝒽𝓇𝒾𝓈𝓉𝓂𝒶𝓈 𝑀𝓇.𝐿𝒶𝓌𝓇𝑒𝓃𝒸𝑒</dd>
+                  <dt class="font-medium text-white">有志者事竟成，多么美好的世界</dt>
+                  <dd class="mt-2 text-sm text-white">Tim Bergling，1989年9月8日－2018年4月20日</dd>
                 </div>
               </dl>
             </div>

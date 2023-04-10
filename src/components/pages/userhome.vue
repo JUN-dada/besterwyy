@@ -1,13 +1,5 @@
 <template>
   <div class="w-full h-auto" id="userhomebackground">
-    <!--
-   This example requires updating your template:
-
-   ```
-   <html class="h-full">
-   <body class="h-full">
-   ```
- -->
     <div class="min-h-full">
       <nav class="border-b border-gray-200">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -17,13 +9,13 @@
               </div>
               <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                 <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-                <a href="#" class="border-indigo-500 text-gray-900 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium" aria-current="page">个人中心</a>
+                <span class="border-indigo-500 text-gray-900 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium" aria-current="page">个人中心</span>
 
-                <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">播放数据</a>
+                <span class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">播放数据</span>
 
-                <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">购买的专辑</a>
+                <span class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">购买的专辑</span>
 
-                <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">其他</a>
+                <span class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">其他</span>
               </div>
             </div>
             <div class="hidden sm:ml-6 sm:flex sm:items-center">
@@ -42,17 +34,6 @@
                     <img class="h-8 w-8 rounded-full" :src="backgroundurl" alt="">
                   </button>
                 </div>
-
-                <!--
-                  Dropdown menu, show/hide based on menu state.
-
-                  Entering: "transition ease-out duration-200"
-                    From: "transform opacity-0 scale-95"
-                    To: "transform opacity-100 scale-100"
-                  Leaving: "transition ease-in duration-75"
-                    From: "transform opacity-100 scale-100"
-                    To: "transform opacity-0 scale-95"
-                -->
               </div>
             </div>
             <div class="-mr-2 flex items-center sm:hidden">
@@ -139,24 +120,33 @@
           </div>
         </div>
       </div>
-
-      <div class="w-full h-auto">
-        <ul role="list" class="divide-y divide-gray-200">
-          <li class="flex py-4">
-            <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-            <div class="ml-3">
-              <p class="text-sm font-medium text-gray-900">Calvin Hawkins</p>
-              <p class="text-sm text-gray-500">calvin.hawkins@example.com</p>
-            </div>
-          </li>
-        </ul>
-
-      </div>
-
     </div>
 
 
+    <div class="bg-white">
+      <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <div class="flex items-center justify-between space-x-4">
+          <h2 class="text-4xl font-black text-gray-900">收藏的歌单</h2>
+        </div>
+        <div class="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4 ">
+          <div @click="sendsongsid(item.id,item.coverImgUrl)" v-for="item in usercollectsonglist" :key="item.id"  class="group relative">
+            <div class="h-64 overflow-hidden rounded-lg bg-gray-100 ">
+              <img :src="item.coverImgUrl"  class="overflow-hidden w-full object-cover">
+            </div>
+            <div class="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900">
+              <h3>
+                <span>
+                  <span aria-hidden="true" class="absolute inset-0"></span>
+                  {{item.name}}
+                </span>
+              </h3>
+            </div>
+          </div>
 
+          <!-- More products... -->
+        </div>
+      </div>
+    </div>
 
 
 
@@ -182,6 +172,7 @@ export default {
       userplaylistimg: '',
       mobiletolang: false,
       userlovesonglist:'',
+      usercollectsonglist:'',
     }
   },
   created() {
@@ -193,13 +184,16 @@ export default {
       this.username = this.usermassgae.data.profile.nickname;
       this.signature = this.usermassgae.data.profile.signature;
       this.backgroundurl = this.usermassgae.data.profile.avatarUrl;
-      let userplaylist=await axios.get(`${httpurls}/user/playlist?uid=${userid}`);
+      let userplaylist=await axios.get(`${httpurls}/user/playlist?uid=${userid}`);//用户喜欢的歌单
       this.userplaylistname = userplaylist.data.playlist[0].name;
       this.userplaylistid = userplaylist.data.playlist[0].id;
       this.userplaylistimg = userplaylist.data.playlist[0].coverImgUrl
       let userplaylistdetail=await axios.get(`${httpurls}/playlist/track/all?id=${this.userplaylistid}&limit=100&offset=1`);
       this.userlovesonglist=userplaylistdetail.data.songs;
       console.log(this.userlovesonglist);
+      let usersingsonglist=await axios.get(`${httpurls}/user/playlist?uid=${userid}`);//用户的收藏之类的歌单
+      console.log(usersingsonglist.data.playlist.slice(1,usersingsonglist.data.playlist.length),'usersingsonglist');
+      this.usercollectsonglist=usersingsonglist.data.playlist.slice(1,usersingsonglist.data.playlist.length);
     }
     getusermsg();
     },
@@ -254,6 +248,16 @@ export default {
         this.mobiletolang = false;
         document.getElementById('mobiletolang').className = 'lass="space-y-1 pb-3 pt-2 hidden';
       }
+    },
+    sendsongsid(id,backgroundurl)
+    {
+      this.$router.push({
+        path: '/homepage/songpages',
+        query: {
+          id: id,
+          backgroundurl:backgroundurl
+        }
+      })
     }
   }
 }
