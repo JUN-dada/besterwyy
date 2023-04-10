@@ -115,7 +115,7 @@
             <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">我喜欢的音乐</h2>
             <p class="mx-auto mt-6 max-w-xl text-lg leading-8 "></p>
             <div class="mt-10 flex items-center justify-center gap-x-6">
-              <span  class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">查看</span>
+              <span @click="sendloveid(userplaylistid)"  class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">查看</span>
             </div>
           </div>
         </div>
@@ -188,8 +188,8 @@ export default {
       this.userplaylistname = userplaylist.data.playlist[0].name;
       this.userplaylistid = userplaylist.data.playlist[0].id;
       this.userplaylistimg = userplaylist.data.playlist[0].coverImgUrl
-      let userplaylistdetail=await axios.get(`${httpurls}/playlist/track/all?id=${this.userplaylistid}&limit=100&offset=1`);
-      this.userlovesonglist=userplaylistdetail.data.songs;
+      // let userplaylistdetail=await axios.get(`${httpurls}/playlist/track/all?id=${this.userplaylistid}&limit=100&offset=1`);
+      // this.userlovesonglist=userplaylistdetail.data.songs;
       console.log(this.userlovesonglist);
       let usersingsonglist=await axios.get(`${httpurls}/user/playlist?uid=${userid}`);//用户的收藏之类的歌单
       console.log(usersingsonglist.data.playlist.slice(1,usersingsonglist.data.playlist.length),'usersingsonglist');
@@ -225,14 +225,7 @@ export default {
         console.log(`rgb(${avgR},${avgG},${avgB})`);
         document.getElementById(lovebackgroundrgb).style.background = `rgb(${avgR},${avgG},${avgB})`;
         //如果颜色过亮，字体颜色改为黑色
-        if (avgR > 200 && avgG > 200 && avgB > 200) {
-          document.getElementById(lovebackgroundrgb).style.color = "#000";
-        }
 
-        if (avgR < 100 && avgG < 100 && avgB < 100) {
-          document.getElementById(lovebackgroundrgb).style.background='';
-          document.getElementById(lovebackgroundrgb).style.color = "#fff";
-        }
       };
     }
     setLoveBackground('userplaylistimg', 'lovebackgroundrgb');
@@ -256,6 +249,15 @@ export default {
         query: {
           id: id,
           backgroundurl:backgroundurl
+        }
+      })
+    },
+    sendloveid(id,backgroundurl)
+    {
+      this.$router.push({
+        path: '/homepage/songpages',
+        query: {
+          id: id,
         }
       })
     }

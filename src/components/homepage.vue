@@ -20,7 +20,7 @@
 
         <div class="w-full h-full flex justify-end">
           <div class="w-1/6 h-full flex justify-center items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">-->
+            <svg @click="gouserhome" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">-->
               <g fill="none" stroke="currentColor" stroke-dasharray="28" stroke-dashoffset="28" stroke-linecap="round" stroke-width="2">
                 <path d="M4 21V20C4 16.6863 6.68629 14 10 14H14C17.3137 14 20 16.6863 20 20V21">
                   <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="28;0"/>
@@ -179,6 +179,10 @@ export default {
       this.topincss = 'h-[6%]'
       this.spanbg = 'bg-black'
       this.$refs.inblackbox.style.display = 'none';
+    },
+    gouserhome()
+    {
+      this.$router.push({path: '/homepage/userhome'});
     }
   },
   created() {
@@ -205,7 +209,6 @@ export default {
   display: block;
   height: 4px;
   position: relative;
-  transition: transform .3s ease-in-out, top .3s ease-in-out .3s, opacity .01s linear .3s;
   top: 0;
   opacity: 1;
 }
@@ -214,22 +217,7 @@ export default {
   margin: 6px 0;
 }
 
-#toggler:checked ~ label .hamburger-container span:nth-child(1) {
-  transform: rotate(45deg);
-  top: 10px;
-  transition: top .3s ease-in-out, transform .3s ease-in-out .3s;
-}
 
-#toggler:checked ~ label .hamburger-container span:nth-child(3) {
-  transform: rotate(-45deg);
-  top: -10px;
-  transition: top .3s ease-in-out, transform .3s ease-in-out .3s;
-}
-
-#toggler:checked ~ label .hamburger-container span:nth-child(2) {
-  opacity: 0;
-  transition: opacity .01s linear .3s;
-}
 
 #toggler {
   display: none;

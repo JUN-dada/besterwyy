@@ -69,7 +69,7 @@ export default {
       timber= setInterval(async () => {
         let userlogin = await axios.post(`/api/login/qr/check?key=${key}&timestamp=${Date.now()}`);
         if (userlogin.data.code === 803) {
-          // this.$router.push({path: "/homepage"});
+          document.cookie = userlogin.data.cookie;
           console.log(userlogin.data.cookie);
           localStorage.setItem("usermasgcookie", userlogin.data.cookie);
           //获取登录状态
@@ -94,7 +94,7 @@ export default {
         this.$router.push({path: "/homepage"});
         return clearInterval(time2);
       }
-    }, 10000)
+    }, 1000)
   }
 
 }

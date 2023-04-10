@@ -174,7 +174,6 @@ export default {
     }
   },
   created() {
-    //js刷新页面
     //每当跳转路由就回到顶部
     this.singerid = JSON.parse(localStorage.getItem('singerid'));
     console.log(this.singerid);
